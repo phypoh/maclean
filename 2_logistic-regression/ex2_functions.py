@@ -52,7 +52,6 @@ def log_sigmoid(X, w):
     for i in range(len(dot_prod)):
         if dot_prod[i] < -10**100:
             output[i] = dot_prod[i]
-            print("estimate")
         else:
             output[i] = np.log(logistic(dot_prod[i]))
     return output
@@ -63,7 +62,6 @@ def neg_log_sigmoid(X, w):
     for i in range(len(dot_prod)):
         if dot_prod[i] > 10**100:
             output[i] = dot_prod[i]
-            print("estimate")
         else:
             output[i] = np.log(logistic(dot_prod[i]))
     return output
