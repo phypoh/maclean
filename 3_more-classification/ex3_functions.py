@@ -22,7 +22,7 @@ def plot_data_internal(X, y):
     y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
     xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100),
                          np.linspace(y_min, y_max, 100))
-    plt.figure()
+    plt.figure(figsize=(12,8))
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
     ax = plt.gca()
@@ -32,7 +32,7 @@ def plot_data_internal(X, y):
     ax.plot(X[y == 0, 0], X[y == 0, 1], 'rx', label = 'Not Admitted')
     plt.xlabel('Exam 1 Score')
     plt.ylabel('Exam 2 Score')
-    plt.legend(loc = 'upper left', scatterpoints = 1, numpoints = 1)
+    plt.legend(loc = 'upper right', scatterpoints = 1, numpoints = 1)
     return xx, yy
     
 
