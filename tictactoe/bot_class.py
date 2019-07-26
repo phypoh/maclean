@@ -150,3 +150,4 @@ class Bot():
             if debug_mode: print("Rewarded.")
 
         print("Trained.")
+
