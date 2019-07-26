@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def init_board(length):
     """Initialise an empty board"""
     board = np.zeros((length,length), dtype=int)
@@ -16,6 +15,7 @@ def place_piece(board, position, side):
     else:
         board[position] = side
         return board, True
+
 
 def disp_board(board):
     """Displays the board"""
@@ -64,9 +64,9 @@ def human_play(board, side):
 
     except:
         print("Wrong format! Try again")
-        human_play(board, side)
+        board = human_play(board, side)
 
-    return
+    return board
 
 def pvp():
     board = init_board(3)
@@ -74,8 +74,37 @@ def pvp():
     side = 1
 
     while win == 0:
-        human_play(board, side)
+        board = human_play(board, side)
         disp_board(board)
         side = -side
         win = check_win(board)
     return
+
+def bot_play(board, side, tBot):
+    position = tBot.decide_move(board, side)
+    board, err_check = place_piece(board, position, side)
+    return board
+
+def pve(bot):
+    board = init_board(3)
+    win = 0
+    side = 1
+
+    while True:
+        board = human_play(board, side)
+        disp_board(board)
+        side = -side
+        win = check_win(board)
+
+        if win != 0:
+            break
+
+        board = bot_play(board, side, bot)
+        disp_board(board)
+        side = -side
+        win = check_win(board)
+
+        if win != 0:
+            break
+
+    bot.update_bot(win)

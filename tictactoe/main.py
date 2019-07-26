@@ -1,5 +1,14 @@
 import numpy as np
 
-from board import *
+from board_rules import *
+from bot_class import Bot
 
-pvp()
+# pvp()
+
+bot = Bot(0.2, 3)
+
+bot.train(10000)
+
+while True:
+    pve(bot)
+
