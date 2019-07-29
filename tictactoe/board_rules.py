@@ -90,6 +90,8 @@ def pve(bot):
     win = 0
     side = 1
 
+    disp_board(board)
+
     while True:
         board = human_play(board, side)
         disp_board(board)
