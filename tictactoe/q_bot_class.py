@@ -4,15 +4,18 @@ from board_rules import *
 
 debug_mode = False
 
+
 class Bot():
 
-    def __init__(self, epsilon, board_size):
+    def __init__(self, epsilon, board_size, alpha=0.9, gamma=0.99):
 
         self.epsilon = epsilon
         self.library = {}
         self.to_update_X = []
         self.to_update_O = []
         self.board_size = board_size
+        self.alpha = alpha
+        self.gamma = gamma
 
     def init_board(self, length):
         """Initialise an empty board"""
@@ -70,7 +73,7 @@ class Bot():
         self.library[board.tobytes()] = {}
         moves = self.check_moves(board)
         for move in moves:
-            self.library[board.tobytes()][move] = {'Reward': 0.5, 'trials': 0}
+            self.library[board.tobytes()][move] = {'Reward': 0.5, 'Trials': 0}
         return moves
 
 
@@ -121,12 +124,9 @@ class Bot():
         self.to_update_O = []
 
     def update_state(self, board, selected, reward):
-        # print(board)
-        # print(selected)
-        # print(self.library[board.tobytes()][selected]['trials'])
-        self.library[board.tobytes()][selected]['trials'] += 1
-        self.library[board.tobytes()][selected]['Reward'] += \
-            (reward - self.library[board.tobytes()][selected]['Reward']) / self.library[board.tobytes()][selected]['trials']
+        self.library[board.tobytes()][selected]['Trials'] += 1
+        x, max_rew = self.max_reward(board)
+        self.library[board.tobytes()][selected]['Reward'] += self.alpha * (reward + self.gamma * max_rew - self.library[board.tobytes()][selected]['Reward'] )
 
 
     def train(self, iterations):
